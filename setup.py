@@ -5,13 +5,13 @@ with open("README.md", "r") as fh:
 
 setup(
     name="sessender",
-    version="0.3",
+    version="0.4",
     author="Amit Dalal",
     author_email="amit+pypi@serverlessguy.com",
     description="A Python package for sending emails using AWS SES",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/your_username/sessender",
+    url="https://github.com/amitsdalal/sessender",
     packages=['sessender'],
     classifiers=[
         "Programming Language :: Python :: 3",
