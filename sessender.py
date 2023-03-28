@@ -1,23 +1,32 @@
-import os
-import traceback
-import logging
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
-
+try:
+    import os
+    import traceback
+    import logging
+    import smtplib
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
+    from email.mime.application import MIMEApplication
+except ImportError as e:
+    raise e
 
 class SesSender:
     def __init__(self):
-        self.smtp_username = os.getenv('SES_USERNAME')
-        self.smtp_password = os.getenv('SES_PASS')
-        self.smtp_host = os.getenv('SES_HOST')
-        self.smtp_port = os.getenv('SES_PORT')
-        self.recipient = os.getenv('EMAIL_RECIPIENT')
-        self.sender = os.getenv('EMAIL_SENDER')
+        try:
+            self.smtp_username = os.getenv('SES_USERNAME')
+            self.smtp_password = os.getenv('SES_PASS')
+            self.smtp_host = os.getenv('SES_HOST')
+            self.smtp_port = os.getenv('SES_PORT')
+            self.recipient = os.getenv('EMAIL_RECIPIENT')
+            self.sender = os.getenv('EMAIL_SENDER')
 
-        # Configure logging
-        logging.basicConfig(filename='seslog.txt', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+            # Configure logging
+            logging.basicConfig(filename='seslog.txt', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+        except Exception as e:
+            error_msg = f"Error initializing Sessender:\n{traceback.format_exc()}"
+            print(error_msg)
+            logging.error(error_msg)
+            raise e
 
     def send_email(self, subject, message, attachment=None):
         try:
