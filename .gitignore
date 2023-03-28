@@ -1,0 +1,31 @@
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+
+# Ignore virtual environment files
+venv/
+env/
+
+# Ignore log files
+*.log
+
+# Ignore build and distribution files
+build/
+dist/
+
+# Ignore local config files
+*.ini
+*.env
+*.cfg
+
+# Ignore test files
+test/
+tests/
+*.pytest_cache/
+
+# Ignore other project specific files
+session.pkl
+*.egg-info/
+*.egg
+*.zip
+*.tar.gz
