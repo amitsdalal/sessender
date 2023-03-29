@@ -26,6 +26,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install wheel twine
+    - name: Get tag name
+      run: |
+        echo "Tag name: ${GITHUB_REF#refs/tags/}"
 
     - name: Build package
       run: |
@@ -38,7 +41,7 @@ jobs:
       run: |
         echo "Publishing package to pypi"
         # twine upload dist/*
-        echo "Publishing package to GitHub"
-        twine upload --verbose --repository-url https://upload.github.com \
-          -u ${{ github.actor }} -p ${{ secrets.RELEASE_TOKEN }} \
-          dist/*
+        # echo "Publishing package to GitHub"
+        # twine upload --verbose --repository-url https://upload.github.com \
+        #  -u ${{ github.actor }} -p ${{ secrets.RELEASE_TOKEN }} \
+        #  dist/*
