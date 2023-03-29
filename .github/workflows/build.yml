@@ -40,7 +40,7 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         echo "Publishing package to pypi"
-        # twine upload dist/*
+        twine upload dist/*
         # echo "Publishing package to GitHub"
         # twine upload --verbose --repository-url https://upload.github.com \
         #  -u ${{ github.actor }} -p ${{ secrets.RELEASE_TOKEN }} \
