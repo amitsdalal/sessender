@@ -28,14 +28,19 @@ class SesSender:
             logging.error(error_msg)
             raise e
 
-    def send_email(self, subject, message, attachment=None):
+    def send_email(self, subject, message=None, html_message=None, attachment=None):
         try:
             # Create a message
             msg = MIMEMultipart()
             msg['From'] = self.sender
             msg['To'] = self.recipient
             msg['Subject'] = subject
-            msg.attach(MIMEText(message))
+
+            # Attach plain text or HTML message
+            if html_message:
+                msg.attach(MIMEText(html_message, 'html'))
+            elif message:
+                msg.attach(MIMEText(message))
 
             # Add attachment to message if specified
             if attachment:
