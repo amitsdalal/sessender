@@ -26,6 +26,9 @@ To use Sessender, you need to provide your Amazon SES credentials as environment
 
 Then, create a `Sessender` object with your credentials:
 
+To send a plain text email, use the send_email method with the message parameter:
+
+
 ```python
 from sessender import SesSender
 
@@ -43,6 +46,23 @@ You can also include attachments with your emails by passing a file path to the 
 sender.send_email(
     subject='Hello, world!',
     message='This is a test email from Sessender with an attachment.',
+    attachment='/path/to/attachment.txt'
+)
+```
+To send a html email, use the send_email method with the html_message parameter:
+
+```python
+sender.send_email(
+    subject='Hello, world!',
+    html_message='<h1>This is a test email from Sessender in HTML format.</h1>',
+)
+```
+You can also include attachments with your emails by passing a file path to the attachment parameter:
+
+```python
+sender.send_email(
+    subject='Hello, world!',
+    html_message='This is a test email from Sessender with an attachment.',
     attachment='/path/to/attachment.txt'
 )
 ```
