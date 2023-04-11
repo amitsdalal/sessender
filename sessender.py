@@ -15,7 +15,7 @@ class SesSender:
             self.smtp_username = os.getenv('SES_USERNAME')
             self.smtp_password = os.getenv('SES_PASS')
             self.smtp_host = os.getenv('SES_HOST')
-            self.smtp_port = os.getenv('SES_PORT')
+            self.smtp_port = os.getenv('SES_PORT', 587) # Use a default value of 587 for the port number
             self.default_recipient = os.getenv('EMAIL_RECIPIENT', None)
             self.default_sender = os.getenv('EMAIL_SENDER', None)
 

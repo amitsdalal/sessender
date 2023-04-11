@@ -1,0 +1,3 @@
+2023-04-11 13:28:18,085 - INFO - Email sent: Test Email with Multiple Recipients, CC, and BCC
+2023-04-11 13:32:58,119 - INFO - Email sent: Test Email with Multiple Recipients, CC, and BCC
+2023-04-11 13:34:20,863 - INFO - Email sent: Test Email with Multiple Recipients, CC, and BCC

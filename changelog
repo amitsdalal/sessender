@@ -1,0 +1,11 @@
+v0.4.6 (2023-04-11)
+-------------------
+
+New Features:
+- Added support for multiple recipients, CC, and BCC when sending emails.
+- Added the ability to specify custom sender and recipient addresses when calling the send_email method.
+- Improved backward compatibility by retaining the option to read the recipient address from the environment variable.
+
+
+Code Quality:
+- Updated test cases to cover the new features and bug fixes.
