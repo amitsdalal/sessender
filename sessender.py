@@ -16,8 +16,8 @@ class SesSender:
             self.smtp_password = os.getenv('SES_PASS')
             self.smtp_host = os.getenv('SES_HOST')
             self.smtp_port = os.getenv('SES_PORT')
-            self.recipient = os.getenv('EMAIL_RECIPIENT')
-            self.sender = os.getenv('EMAIL_SENDER')
+            self.default_recipient = os.getenv('EMAIL_RECIPIENT', None)
+            self.default_sender = os.getenv('EMAIL_SENDER', None)
 
             # Configure logging
             logging.basicConfig(filename='seslog.txt', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -28,12 +28,16 @@ class SesSender:
             logging.error(error_msg)
             raise e
 
-    def send_email(self, subject, message=None, html_message=None, attachment=None):
+    def send_email(self, subject, message=None, html_message=None, attachment=None, sender=None, recipients=None, cc=None, bcc=None):
         try:
             # Create a message
             msg = MIMEMultipart()
-            msg['From'] = self.sender
-            msg['To'] = self.recipient
+            msg['From'] = sender or self.default_sender
+            msg['To'] = ', '.join(recipients) if recipients else self.default_recipient
+            if cc:
+                msg['Cc'] = ', '.join(cc)
+            if bcc:
+                msg['Bcc'] = ', '.join(bcc)
             msg['Subject'] = subject
 
             # Attach plain text or HTML message
@@ -50,10 +54,16 @@ class SesSender:
                     msg.attach(part)
 
             # Connect to the SMTP server and send the message
+            all_recipients = recipients or [self.default_recipient]
+            if cc:
+                all_recipients += cc
+            if bcc:
+                all_recipients += bcc
+
             with smtplib.SMTP(self.smtp_host, int(self.smtp_port)) as smtp:
                 smtp.starttls()
                 smtp.login(self.smtp_username, self.smtp_password)
-                smtp.sendmail(self.sender, self.recipient, msg.as_string())
+                smtp.sendmail(msg['From'], all_recipients, msg.as_string())
 
             # Log success
             logging.info(f"Email sent: {subject}")
