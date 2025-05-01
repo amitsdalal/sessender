@@ -16,9 +16,9 @@ jobs:
         NODE_VERSION: 22.x
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v4
       with:
-        python-version: 3.12
+        python-version: 3.9
       env:
         NODE_VERSION: 22.x
 
