@@ -47,11 +47,19 @@ class SesSender:
                 msg.attach(MIMEText(message))
 
             # Add attachment to message if specified
+            # Add one or more attachments
             if attachment:
-                with open(attachment, 'rb') as f:
-                    part = MIMEApplication(f.read(), Name=os.path.basename(attachment))
-                    part['Content-Disposition'] = f'attachment; filename="{os.path.basename(attachment)}"'
-                    msg.attach(part)
+                if isinstance(attachment, str):
+                    attachment = [attachment]
+                for filepath in attachment:
+                    if os.path.exists(filepath):
+                        with open(filepath, 'rb') as f:
+                            part = MIMEApplication(f.read(), Name=os.path.basename(filepath))
+                            part['Content-Disposition'] = f'attachment; filename="{os.path.basename(filepath)}"'
+                            msg.attach(part)
+                    else:
+                        logging.warning(f"Attachment not found: {filepath}")
+
 
             # Connect to the SMTP server and send the message
             all_recipients = recipients or [self.default_recipient]
