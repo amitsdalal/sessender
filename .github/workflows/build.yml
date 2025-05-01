@@ -11,16 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       env:
-        NODE_VERSION: 16.x
+        NODE_VERSION: 22.x
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: 3.9
+        python-version: 3.12
       env:
-        NODE_VERSION: 16.x
+        NODE_VERSION: 22.x
 
     - name: Install dependencies
       run: |
@@ -36,12 +36,8 @@ jobs:
 
     - name: Publish package
       env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
       run: |
         echo "Publishing package to pypi"
         twine upload dist/*
-        # echo "Publishing package to GitHub"
-        # twine upload --verbose --repository-url https://upload.github.com \
-        #  -u ${{ github.actor }} -p ${{ secrets.RELEASE_TOKEN }} \
-        #  dist/*
